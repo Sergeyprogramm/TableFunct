@@ -121,4 +121,22 @@ public class TableFunction {
         }
         return -1;
     }
+
+ @Override
+ public boolean equals(Object obj) {
+     return (this == obj);
+ }
+
+ @Override
+ public int hashCode(){
+     return table.hashCode();
+     }
+
+
+
+ @Override
+  public String toString() {
+     return getClass().getName() + "@" + Integer.toHexString(hashCode());
+ }
+
 }
