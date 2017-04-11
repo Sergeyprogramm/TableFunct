@@ -8,20 +8,14 @@ import static java.lang.Math.abs;
  */
 public class TableFunction {
     HashMap<Double,Double> table = new HashMap<Double,Double>();
-
-    //метод добавления пары
     public void Add (double x,double y)
     {
         table.put(x,y);
     }
-    //метод удаления пары
     public void Remove (double x, double y)
     {
         table.remove(x,y);
     }
-
-
-    //показывает множество пар
     private void Print(Map.Entry item)
     {
         System.out.println("x:" +item.getKey()+" y:" +item.getValue());
@@ -35,9 +29,8 @@ public class TableFunction {
         Map.Entry item = Find(x);
         Print(item);
     }
-
-    //получение элемента
-    private Map.Entry Get(double x)
+    //поиск по ключу
+    public Map.Entry Get(double x)
     {
         for(Map.Entry item: table.entrySet())
         {
@@ -46,8 +39,8 @@ public class TableFunction {
         }
         return null;
     }
-
-    private Map.Entry Get(int i)
+    //поиск по индексу
+    public Map.Entry Get(int i)
     {
         int index =0;
         for(Map.Entry item: table.entrySet())
@@ -58,7 +51,7 @@ public class TableFunction {
         }
         return null;
     }
-    //получение индекса элемента
+    //получение индекса по ключу
     private int GetIndex(double x)
     {
         int i=0;
@@ -70,8 +63,6 @@ public class TableFunction {
         }
         return -1;
     }
-
-    //метод поиска пары, ближайшей к x0
     public Map.Entry Find(double x)
     {
         if(table.size()>0)
@@ -93,14 +84,10 @@ public class TableFunction {
             System.out.println("Таблица пуста");
             return null;
         }
-
     }
-
-
-    //рассчет значения функции по заданному x(используя интерполяцию)
     public double InterPolation(double x)
     {
-
+//Map.Entry before = Find(x);
         Map.Entry before =null;
         for(Map.Entry item: table.entrySet())
         {
@@ -121,22 +108,4 @@ public class TableFunction {
         }
         return -1;
     }
-
- @Override
- public boolean equals(Object obj) {
-     return (this == obj);
- }
-
- @Override
- public int hashCode(){
-     return table.hashCode();
-     }
-
-
-
- @Override
-  public String toString() {
-     return getClass().getName() + "@" + Integer.toHexString(hashCode());
- }
-
 }
