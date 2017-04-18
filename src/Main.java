@@ -9,7 +9,12 @@ public class Main {
         t.Add(10,10);
         t.Add(12,12);
         t.Print(11);
+        System.out.println(t.Find(10.55));
         System.out.println(t.InterPolation(11.5));
+        Points points = new Points();
+        for(int i=0;i<100;i++)
+            points.Add(i,i);
+        points.Print();
 
     }
 }
