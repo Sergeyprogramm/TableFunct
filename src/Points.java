@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import static java.lang.Math.abs;
 
 /**
@@ -10,10 +13,7 @@ public class Points {
     public void Add(double x, double y) {
         points.add(new Point(x, y));
     }
-
-//    public void Add(Point p) {
-//        points.add(p);
-//    }
+    
 
     public void Remove(int index) {
         points.remove(index);
@@ -23,11 +23,20 @@ public class Points {
         points.removeAll(points);
     }
 
-    public Point Get(double x) {
-        for (int i = 0; i < points.size(); i++)
-            if (x == points.get(i).x)
-                return points.get(i);
-        return null;
+    public Map<Double,Double> GetPoints()
+    {
+        Map<Double,Double> res= new HashMap<>();
+        for(Point point: points)
+            res.put(point.x,point.y);
+        return res;
+    }
+    public Point Get(double x)
+    {
+        Map<Double,Double> map= GetPoints();
+        if(map.containsKey(x))
+            return new Point(x, map.get(x));
+        else
+            return null;
     }
 
     public Point Find(double x) {
@@ -46,24 +55,21 @@ public class Points {
     }
 
     public Point InterPolation(double x) {
-        if (points.size() > 1) {
-            Point before = null;
-            int index = -1;
-            for (int i = 0; i < points.size(); i++)
-                if (points.get(i).x < x) {
-                    before = points.get(i);
-                    index = i;
-                }
-            if (before != null) {
+        if(points.size()>1) {
+            Point before = null , after = null;
+            for(double i=x;i>=points.get(0).x;i-=0.1) {
+                before = Get(Math.round(i));
+                if (before != null && before.x <x) break;
             }
-            Point after = points.get(index + 1);
-            if (after != null) {
-                double x0 = before.x, y0 = before.y;
-                double x1 = after.x, y1 = after.y;
-                return new Point(x, y0 + ((y1 - y0) / (x1 - x0)) * (x - x0));
+            for(double i=x;i<=points.get(points.size()-1).x;i+=0.1) {
+                after = Get(Math.round(i));
+                if(after!=null && after.x>x)break;
+            }
+            if (before != null && after != null) {
+                double x0 = before.x, y0 = before.y,x1 = after.x, y1 = after.y;
+                return new Point(x,y0 + ((y1 - y0) / (x1 - x0)) * (x - x0));
             }
         }
-
         return null;
     }
 
