@@ -22,14 +22,18 @@ public class TableFunction {
         System.out.println("x:" + item.getKey() + " y:" + item.getValue());
     }
 
-    //поиск ближайшего по ключу
+
     public Map.Entry Get(double x) {
-        return table.floorEntry(x);
+        if (table.floorEntry(x) != null)
+            return table.floorEntry(x);
+        else
+            return table.ceilingEntry(x);
+
     }
 
     public MEntry InterPolation(double x) {
-        Map.Entry before = Get(x - 1E-7);
-        Map.Entry after = table.ceilingEntry(x + 1E-7);
+        Map.Entry before = Get(x - Math.ulp(x));
+        Map.Entry after = table.ceilingEntry(x +  Math.ulp(x));
         if (before != null && after != null) {
             double x0 = (double) before.getKey(), y0 = (double) before.getValue();
             double x1 = (double) after.getKey(), y1 = (double) after.getValue();

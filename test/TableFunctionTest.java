@@ -29,18 +29,35 @@ public class TableFunctionTest {
 
     @Test
     public void get() throws Exception {
-        for (double i = 0; i < 100; i++) org.junit.Assert.assertEquals((double) t.Get(i).getValue(), i, 0.000001);
-        org.junit.Assert.assertEquals((double) t.Get(0.25).getValue(), 0, 0.000001);
-        org.junit.Assert.assertEquals((double) t.Get(0.5).getValue(), 0.5, 0.000001);
+        for (double i = 0; i < 100; i++)
+            org.junit.Assert.assertEquals((double) t.Get(i).getValue(), i, 1E-7);
     }
+
+    @Test
+    public void get2() throws Exception {
+        org.junit.Assert.assertEquals((double) t.Get(0.25).getValue(), 0, 1E-7);
+        org.junit.Assert.assertEquals((double) t.Get(0.5).getValue(), 0.5, 1E-7);
+    }
+
 
     @Test
     public void interPolation() throws Exception {
         for (double i = 1; i < 100; i++) {
             Object val = t.InterPolation(i);
             if (val != null)
-                org.junit.Assert.assertEquals((double) ((Map.Entry) t.InterPolation(i)).getValue(), i, 0.000001);
+                org.junit.Assert.assertEquals((double) ((Map.Entry) t.InterPolation(i)).getValue(), i, 1E-7);
         }
-        for (double i = 0; i > -100; i--) org.junit.Assert.assertEquals(t.InterPolation(i), null);
+    }
+
+    @Test
+    public void interPolation2() throws Exception {
+
+        org.junit.Assert.assertEquals((double) t.InterPolation(0).getValue(), 0, 1E-7);
+    }
+
+    @Test
+    public void interPolation3() throws Exception {
+        for (double i = -1; i > -100; i--)
+            org.junit.Assert.assertEquals(t.InterPolation(i), null);
     }
 }
